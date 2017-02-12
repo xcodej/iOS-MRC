@@ -13,11 +13,21 @@
 @end
 
 @implementation ViewController
-// 内存管理四大规则：
-// 1. 自己生成的对象，自己持有
-// 2. 非自己生成的对象，自己也能持有
-// 3. 不再需要自己持有的对象时释放。
-// 4. 非自己持有的对象无法释放。
+/**
+ * 内存管理四大规则：
+ * 1. 自己生成的对象，自己持有
+ * 2. 非自己生成的对象，自己也能持有
+ * 3. 不再需要自己持有的对象时释放。
+ * 4. 非自己持有的对象无法释放。
+ * 生成并持有对象 alloc/new/copy/mutableCopy等
+ * 持有对象      retain
+ * 释放对象      release
+ * 废弃对象      dealloc
+ * 对象被持有(retain) 引用计数加一
+ * 对象被释放(relase) 引用计数减一
+ * 当对象的引用计数等于零时废弃(自动调用dealloc)
+ **/
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     mrc01();
