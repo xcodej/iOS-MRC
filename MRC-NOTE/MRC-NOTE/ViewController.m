@@ -73,9 +73,11 @@ void mrc0102() {
 }
 
 void mrc03() {
-    //不是自己生成的对象，也能持有
+    // 不是自己生成的对象，也能持有
     NSMutableString * strObjected = [NSMutableString stringWithString:@"src String"];
     [strObjected retain];
     printf("%lu\n",[strObjected retainCount]);
+    // 此时可以释放 因为自己持有才能释放
+    [strObjected release];
 }
 @end
