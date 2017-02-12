@@ -46,9 +46,18 @@ void mrc0102() {
     printf("%lu\n",[strObjected retainCount]);
     // 其实不然 使用内存管理第四条规则 非自己持有的对象无法释放来一一验证
     [strInited release];
-    // 取消备注下一行就会崩溃
+    // 取消备注下一行就会崩溃 企图释放非持有对象而导致崩溃
 //    [strObjected release];
-    // 企图释放非持有对象而导致崩溃
-    
+}
+
+/**
+ * 那么到底谁持有 strObjected?
+ * 使用类似 [obj object] 方法 具体实现
+ */
+- (id) xj_object {
+    id obj = [[NSObject alloc] init];
+    // 使用object方法获取的对象都放在autoreleasepool中，当对象超出使用范围后会自动的调用release
+    [obj autorelease];
+    return obj;
 }
 @end
