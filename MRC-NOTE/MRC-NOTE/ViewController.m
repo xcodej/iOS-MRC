@@ -23,6 +23,7 @@
     mrc01();
     mrc02();
     mrc0102();
+    mrc03();
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -59,5 +60,12 @@ void mrc0102() {
     // 使用object方法获取的对象都放在autoreleasepool中，当对象超出使用范围后会自动的调用release
     [obj autorelease];
     return obj;
+}
+
+void mrc03() {
+    //不是自己生成的对象，也能持有
+    NSMutableString * strObjected = [NSMutableString stringWithString:@"src String"];
+    [strObjected retain];
+    printf("%lu\n",[strObjected retainCount]);
 }
 @end
