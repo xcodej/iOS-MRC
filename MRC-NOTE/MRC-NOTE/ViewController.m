@@ -13,17 +13,42 @@
 @end
 
 @implementation ViewController
-
+// 内存管理四大规则：
+// 1. 自己生成的对象，自己持有
+// 2. 非自己生成的对象，自己也能持有
+// 3. 不再需要自己持有的对象时释放。
+// 4. 非自己持有的对象无法释放。
 - (void)viewDidLoad {
     [super viewDidLoad];
+    mrc01();
+    mrc02();
+    mrc0102();
     // Do any additional setup after loading the view, typically from a nib.
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+void mrc01() {
+    // 使用 alloc、new、copy、mutableCopy开头的方法生成的对象，自己持有
+    NSMutableString * str = [[NSMutableString alloc] initWithString:@"src String"];
+    printf("%lu\n",[str retainCount]);
 }
 
+void mrc02() {
+    // 使用类似[NSMutableArray array]方法可以获取对象但自己不持有
+    NSMutableString * str = [NSMutableString stringWithString:@"src String"];
+    printf("%lu\n",[str retainCount]);
+}
 
+void mrc0102() {
+    // mrc01() 和 mrc02 看似没什么区别 两个str的retainCount都为1
+    NSMutableString * strInited = [[NSMutableString alloc] initWithString:@"src String"];
+    printf("%lu\n",[strInited retainCount]);
+    NSMutableString * strObjected = [NSMutableString stringWithString:@"src String"];
+    printf("%lu\n",[strObjected retainCount]);
+    // 其实不然 使用内存管理第四条规则 非自己持有的对象无法释放来一一验证
+    [strInited release];
+    // 取消备注下一行就会崩溃
+//    [strObjected release];
+    // 企图释放非持有对象而导致崩溃
+    
+}
 @end
