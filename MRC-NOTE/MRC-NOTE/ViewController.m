@@ -30,11 +30,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    mrc01();
-    mrc02();
-    mrc0102();
-    mrc03();
-    // Do any additional setup after loading the view, typically from a nib.
+//    mrc01();
+//    mrc02();
+//    mrc0102();
+//    mrc03();
+    mrc04();
 }
 
 void mrc01() {
@@ -79,5 +79,20 @@ void mrc03() {
     printf("%lu\n",[strObjected retainCount]);
     // 此时可以释放 因为自己持有才能释放
     [strObjected release];
+}
+
+void mrc04() {
+    NSMutableArray* ary = [[NSMutableArray array] retain];
+    NSLog(@"ary: %lu",[ary retainCount]);
+    NSMutableString *str = [NSMutableString stringWithFormat:@"test"];
+    [str retain];
+    [ary addObject:str];
+    NSLog(@"%@%lu",str,[str retainCount]);
+    [str retain];
+    [str release];
+    [str release];
+    NSLog(@"%@%lu",str,[str retainCount]);
+    [ary removeAllObjects];
+    NSLog(@"%@%lu",str,[str retainCount]);
 }
 @end
